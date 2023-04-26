@@ -1,7 +1,6 @@
 Добавьте ASSET_URL в файл .env
 
 Надо создать папки:
-Добавьте ASSET_URL в файл .env
 
 /storage/app/temp/docs
 
