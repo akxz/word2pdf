@@ -1,6 +1,14 @@
-Добавьте ASSET_URL в файл .env
+git clone https://github.com/akxz/word2pdf.git
 
-Надо создать папки:
+cd word2pdf
+
+cp .env.example .env
+
+php artisan key:generate
+
+Добавляем ASSET_URL в файл .env
+
+Для корректной работы должны существовать папки:
 
 /storage/app/temp/docs
 
@@ -9,6 +17,8 @@
 /storage/app/temp/templates
 
 /storage/app/public/temp/pdf
+
+/public/storage/temp/pdf
 
 Если внесли изменения в компонент Vue в модуле Converter, то выполняем:
 
