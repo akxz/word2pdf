@@ -71,7 +71,6 @@ export default defineComponent({
           }
 
           let file = e.target.files[0];
-          console.log(file);
           checkValidation(file);
 
           if (isValid.value === true) {
@@ -99,7 +98,6 @@ export default defineComponent({
       });
 
       const upload = (file) => {
-          console.log('upload');
           let formData = new FormData();
           formData.append('name', file.name);
           formData.append('file', file, 'filename.docx');
@@ -109,7 +107,6 @@ export default defineComponent({
                 templateName.value = response.data.templateInfo.name;
                 templateKeys.value = response.data.templateInfo.labels;
                 templateValues.value = [];
-                // console.log(response);
             }).catch((error) => {
                 templateName.value = null;
                 templateKeys.value = null;
@@ -119,6 +116,7 @@ export default defineComponent({
       };
 
       const generatePdf = () => {
+          buttonDisabled.value = true;
           let formData = new FormData();
           templateKeys.value.forEach(item => {
               formData.append(item, templateValues.value[item]);
@@ -134,11 +132,8 @@ export default defineComponent({
       };
 
       const getPdfLink = (filename) => {
-          console.log('run getPdfLink ' + filename);
           apiClient.get('converter/pdf-link/by-name/' + filename)
             .then((response) => {
-                console.log(response);
-
                 if (response.data.link === '') {
                     runPdfChecker(filename);
                 } else {
@@ -151,16 +146,11 @@ export default defineComponent({
       };
 
       const runPdfChecker = (filename) => {
-          // disable button
-          // set loading icon
-          buttonDisabled.value = true;
           timerId.value = setTimeout(getPdfLink, 2000, filename);
       };
 
       const stopPdfChecker = () => {
           console.log('stopPdfChecker');
-          // enable button
-          // remove loading icon
           buttonDisabled.value = false;
           clearTimeout(timerId.value);
       };

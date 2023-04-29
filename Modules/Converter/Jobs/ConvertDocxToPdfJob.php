@@ -43,12 +43,13 @@ class ConvertDocxToPdfJob implements ShouldQueue
             '--convert-to',
             'pdf:writer_pdf_Export',
             $docxPath,
+            '--outdir',
             $pdfDir
         ]);
 
         try {
             $process->mustRun();
-            Log::debug($process->getOutput());
+            // Log::debug($process->getOutput());
         } catch (ProcessFailedException $exception) {
             Log::debug($exception->getMessage());
         }
