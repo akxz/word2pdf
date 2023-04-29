@@ -19,4 +19,5 @@ use Illuminate\Http\Request;
 Route::prefix('converter')->group(function() {
     Route::post('/upload', 'ConverterController@upload');
     Route::post('/pdf', 'ConverterController@generatePdf');
+    Route::get('/pdf-link/by-name/{name}', 'ConverterController@checkPdfByName');
 });

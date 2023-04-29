@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Converter\Actions;
+namespace Modules\Converter\Tasks;
 
-class ParseTemplateVariablesByPathAction
+class ParseTemplateVariablesByPathTask
 {
     public function run($path)
     {

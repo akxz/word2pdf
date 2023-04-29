@@ -7,8 +7,7 @@ use Illuminate\Routing\Controller;
 use Modules\Converter\Http\Requests\UploadTemplateRequest;
 use Modules\Converter\Http\Requests\GeneratePdfRequest;
 use Modules\Converter\Actions\UploadTemplateAction;
-use Modules\Converter\Actions\ParseTemplateVariablesByPathAction;
-use Modules\Converter\Actions\GeneratePdfAndGetDownloadUrlAction;
+use Modules\Converter\Actions\GeneratePdfAction;
 
 class ConverterController extends Controller
 {
@@ -22,8 +21,22 @@ class ConverterController extends Controller
 
     public function generatePdf(GeneratePdfRequest $request)
     {
-        $link = app(GeneratePdfAndGetDownloadUrlAction::class)
+        $filename = app(GeneratePdfAction::class)
             ->run($request->all());
+
+        return response()->json(compact('filename'));
+    }
+
+    public function checkPdfByName($name)
+    {
+        $relPath = config('converter.public_pdf_dir') . $name . '.pdf';
+        $path = public_path($relPath);
+
+        if (file_exists($path)) {
+            $link = config('app.url') . '/' . $relPath;
+        } else {
+            $link = '';
+        }
 
         return response()->json(compact('link'));
     }
